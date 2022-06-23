@@ -73,11 +73,10 @@ class Window(Tk):
                 # move file
                 os.rename(self.PATH + "\\" + file, self.PATH +
                           "\\" + type + "\\" + file)
-        
+
         end = time.time()
         text = "Organization completed in " + str(end - start) + " seconds."
         messagebox.showinfo("Completed", text)
-            
 
     def content(self):
         self.frame = ttk.LabelFrame(self, text="File Groups")

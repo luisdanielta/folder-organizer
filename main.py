@@ -8,7 +8,7 @@ class Window(Tk):
 
     BUTTONS = ["Video", "Audio", "Image", "Document", "Compressed", "Program", "Other", "All"]
     OS = sys.platform
-    PATH = ""
+    PATH: str
 
     def __init__(self):
         super().__init__()
@@ -17,8 +17,6 @@ class Window(Tk):
 
         folder = ttk.Button(self, text="Select Folder", command=self.getPath)
         folder.grid(row=0, column=0, padx=5, pady=5, sticky="NSEW")
-
-        
 
         self.content()
 

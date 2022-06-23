@@ -70,12 +70,16 @@ class Window(Tk):
         # get files
         files = os.listdir(self.PATH)
         ext = self.BUTTONS[type]
+        start = time.time()
 
         for file in files:
             if file.endswith(tuple(ext)):
                 # move file
                 os.rename(self.PATH + "\\" + file, self.PATH +
                           "\\" + type + "\\" + file)
+        
+        end = time.time()
+        messagebox.showinfo("Done", f"{type} files moved in {end - start} seconds.")
 
     def content(self):
         self.frame = ttk.LabelFrame(self, text="File Groups")

@@ -6,7 +6,7 @@ import json
 import re
 import subprocess
 import time
-from tkinter import filedialog, ttk
+from tkinter import filedialog, ttk, messagebox
 from tkinter import Tk
 
 
@@ -43,11 +43,13 @@ class Window(Tk):
         elif self.OS == "darwin":
             self.PATH = filedialog.askdirectory(initialdir="/Users")
         else:
-            print("Error: Unknown OS")
-            sys.exit()
+            print("Unsupported OS")
+            self.destroy()
 
-        self.textPath = ttk.Label(self, text=self.PATH)
-        self.textPath.grid(row=1, padx=5, pady=5, sticky="NSEW")
+        if self.PATH == 'C:/Users' or self.PATH == '/home' or self.PATH == '/Users':
+            text = "Please select a foldel different than the default one."
+            messagebox.showerror("Error", text)
+            return
 
         # globals() config state of buttons to be enabled
         for button in self.BUTTONS:
@@ -56,9 +58,12 @@ class Window(Tk):
         for button in self.ADOBE:
             globals()[button].config(state="enabled")
 
+        self.textPath = ttk.Label(self, text=self.PATH)
+        self.textPath.grid(row=1, padx=5, pady=5, sticky="NSEW")
+
     def content(self):
         self.frame = ttk.LabelFrame(self, text="File Groups")
-        self.frame.grid(row=2, padx=5, pady=5)
+        self.frame.grid(row=2, padx=5, pady=5, sticky="NSEW")
         r = 0
         c = 0
         for button in self.BUTTONS:

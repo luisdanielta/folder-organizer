@@ -1,10 +1,6 @@
 #!/usr/bin/env python
 import sys
 import os
-import base64
-import json
-import re
-import subprocess
 import time
 from tkinter import filedialog, ttk, messagebox
 from tkinter import Tk
@@ -79,7 +75,9 @@ class Window(Tk):
                           "\\" + type + "\\" + file)
         
         end = time.time()
-        messagebox.showinfo("Done", f"{type} files moved in {end - start} seconds.")
+        text = "Organization completed in " + str(end - start) + " seconds."
+        messagebox.showinfo("Completed", text)
+            
 
     def content(self):
         self.frame = ttk.LabelFrame(self, text="File Groups")

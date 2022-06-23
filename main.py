@@ -61,6 +61,12 @@ class Window(Tk):
         self.textPath = ttk.Label(self, text=self.PATH)
         self.textPath.grid(row=1, padx=5, pady=5, sticky="NSEW")
 
+        # create folders
+        for button in self.BUTTONS:
+            if button != "All":
+                if not os.path.exists(self.PATH + "\\" + button):
+                    os.makedirs(self.PATH + "\\" + button)
+
     def content(self):
         self.frame = ttk.LabelFrame(self, text="File Groups")
         self.frame.grid(row=2, padx=5, pady=5, sticky="NSEW")

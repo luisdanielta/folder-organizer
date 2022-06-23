@@ -12,12 +12,14 @@ from tkinter import Tk
 
 class Window(Tk):
 
-    BUTTONS = {"Video": [], "Audio": [], "Image": [], "Document": [],
-               "Compressed": [], "Program": [], "Other": [], "All": ["All"]}
-    ADOBE = {
-        "Photoshop": [".psd"],
-        "Illustrator": [".ai", ".eps", ".pdf"]
-    }
+    BUTTONS = {"Video": [".mp4", ".avi", ".mov"],
+               "Audio": [".mp3", ".wav", ".flac", ".ogg", ".aac", ".wma"],
+               "Image": [".jpg", ".jpeg", ".png", ".gif", ".bmp", ".tiff", ".psd", ".webp", ".heic", ".heif", ".svg", ".ico", ".PNG", ".JPG", ".JPEG", ".GIF", ".BMP", ".TIFF", ".PSD", ".WEBP", ".HEIC", ".HEIF", ".SVG", ".ICO"],
+               "Document": [".doc", ".docx", ".xls", ".xlsx", ".ppt", ".pptx", ".pdf", ".txt", ".rtf", ".csv", ".html", ".htm", ".xml", ".json", ".yml", ".yaml", ".md", ".markdown"],
+               "Compressed": [".zip", ".rar", ".img", ".dng", ".tar", ".7z"],
+               "Program": [".exe", ".msi", ".app", ".deb", ".apk", ],
+               "Photoshop": [".psd"],
+               "Illustrator": [".ai", ".eps"], }
     OS = sys.platform
     PATH: str
 
@@ -55,9 +57,6 @@ class Window(Tk):
         for button in self.BUTTONS:
             globals()[button].config(state="enabled")
 
-        for button in self.ADOBE:
-            globals()[button].config(state="enabled")
-
         self.textPath = ttk.Label(self, text=self.PATH)
         self.textPath.grid(row=1, padx=5, pady=5, sticky="NSEW")
 
@@ -67,6 +66,17 @@ class Window(Tk):
                 if not os.path.exists(self.PATH + "\\" + button):
                     os.makedirs(self.PATH + "\\" + button)
 
+    def organize(self, type):
+        # get files
+        files = os.listdir(self.PATH)
+        ext = self.BUTTONS[type]
+
+        for file in files:
+            if file.endswith(tuple(ext)):
+                # move file
+                os.rename(self.PATH + "\\" + file, self.PATH +
+                          "\\" + type + "\\" + file)
+
     def content(self):
         self.frame = ttk.LabelFrame(self, text="File Groups")
         self.frame.grid(row=2, padx=5, pady=5, sticky="NSEW")
@@ -74,20 +84,7 @@ class Window(Tk):
         c = 0
         for button in self.BUTTONS:
             globals()[button] = ttk.Button(
-                self.frame, text=button, state="disabled")
-            globals()[button].grid(row=r, column=c, padx=3, pady=3)
-            c += 1
-            if c == 4:
-                r += 1
-                c = 0
-
-        self.adobe = ttk.LabelFrame(self, text="Adobe")
-        self.adobe.grid(row=3, padx=5, pady=5, sticky="NSEW")
-        r = 0
-        c = 0
-        for button in self.ADOBE:
-            globals()[button] = ttk.Button(
-                self.adobe, text=button, state="disabled")
+                self.frame, text=button, state="disabled", command=lambda button=button: self.organize(button))
             globals()[button].grid(row=r, column=c, padx=3, pady=3)
             c += 1
             if c == 4:

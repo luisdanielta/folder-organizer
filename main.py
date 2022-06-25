@@ -90,7 +90,7 @@ class Window(Tk):
         c = 0
         for button in self.BUTTONS:
             globals()[button] = ttk.Button(
-                self.frame, text=button, state="disabled", command=lambda btn=button: self.organize(button))
+                self.frame, text=button, state="disabled", command=lambda button=button: self.organize(button))
             globals()[button].grid(row=r, column=c, padx=3, pady=3)
             c += 1
             if c == 4:

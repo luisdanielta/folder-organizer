@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 import sys
+from PIL import Image
 import os
 import time
 from tkinter import filedialog, ttk, messagebox
@@ -99,5 +100,4 @@ class Window(Tk):
 
 
 if __name__ == "__main__":
-    app = Window()
-    app.mainloop()
+    Window().mainloop()
